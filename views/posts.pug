@@ -34,10 +34,23 @@ html(lang="ja")
                 i.bi-patch-check-fill.ms-1
             - const tooltipTitle = `<small>${post.absoluteCreatedAt}</small>`
             small.card-text.float-end(data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title=tooltipTitle) #{post.relativeCreatedAt}
-          p.card-text.lead #{post.content}
+          p.card-text.lead.post-content
+            | #{post.content}
+            if post.isEdited
+              small.text-muted.ms-2
+                i.bi-pencil
+                | 編集済み
+            form.post-edit-form.d-none(method="post" action="/posts/edit")
+              textarea.form-control(name="content" rows="3")= post.content
+              input(type="hidden" name="id" value=post.id)
+              input(type="hidden" name="oneTimeToken" value=oneTimeToken)
+              div.mt-2
+                button(type="submit").btn.btn-primary.btn-sm 更新
+                button(type="button").btn.btn-secondary.btn-sm.cancel-edit キャンセル
         - const isDeletable = (user === post.postedBy || user === 'admin')
         if isDeletable
-          div.card-footer.d-flex.justify-content-end
+          div.card-footer.d-flex.justify-content-end.gap-2
+            button(type="button" class="btn btn-outline-primary btn-sm edit-button") 編集
             form(method="post" action="/posts/delete")
               input(type="hidden" name="id" value=post.id)
               input(type="hidden" name="oneTimeToken" value=oneTimeToken)

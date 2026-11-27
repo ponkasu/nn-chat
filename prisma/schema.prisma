@@ -18,4 +18,5 @@ model Post {
   content  String
   postedBy String   @db.VarChar(255)
   createdAt DateTime @db.Timestamptz(6) @default(now())
+  isEdited  Boolean  @default(false)
 }

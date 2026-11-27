@@ -28,3 +28,38 @@ const tooltipTriggerElements = document.querySelectorAll('[data-bs-toggle="toolt
 tooltipTriggerElements.forEach((tooltipTriggerElement) => {
   new bootstrap.Tooltip(tooltipTriggerElement);
 });
+
+// 投稿の編集ボタン
+const editButtons = document.querySelectorAll('.edit-button');
+
+editButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.card');
+    const content = card.querySelector('.post-content');
+    const editForm = card.querySelector('.post-edit-form');
+
+    // 投稿本文を隠して編集フォームを表示
+    content.classList.add('d-none');
+    editForm.classList.remove('d-none');
+
+    // 編集ボタンを一時的に隠す
+    button.classList.add('d-none');
+  });
+});
+
+// キャンセルボタン
+const cancelButtons = document.querySelectorAll('.cancel-edit');
+
+cancelButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.card');
+    const content = card.querySelector('.post-content');
+    const editForm = card.querySelector('.post-edit-form');
+    const editButton = card.querySelector('.edit-button');
+
+    // 元の投稿表示に戻す
+    content.classList.remove('d-none');
+    editForm.classList.add('d-none');
+    editButton.classList.remove('d-none');
+  });
+});
